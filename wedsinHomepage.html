@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedsin - Where Relationships, Celebrations, and Legacies Unite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6E0C49;
+            --white: #FFFFFF;
+            --soft-gold: #D4AF37;
+            --light-grey: #F8F8F8;
+            --mid-grey: #E5E5E5;
+            --dark-grey: #333333;
+            --text-grey: #666666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark-grey);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            padding: 1.5rem 5%;
+            background: transparent;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 1rem 5%;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        header.scrolled .logo {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            margin : 0 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        header.scrolled nav a {
+            color: var(--dark-grey);
+        }
+
+        nav a:hover {
+            color: var(--soft-gold);
+        }
+
+        .cta-btn {
+            padding: 0.75rem 2rem;
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        header.scrolled .cta-btn {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(110, 12, 73, 0.3);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .mobile-menu span {
+            background: var(--primary);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: right 0.4s ease;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav a {
+            display: block;
+            color: var(--dark-grey);
+            text-decoration: none;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--mid-grey);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--primary);
+            padding-left: 1rem;
+        }
+
+        .mobile-nav .cta-btn {
+            width: 100%;
+            margin-top: 2rem;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6E0C49 0%, #3d0728 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(110, 12, 73, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(110, 12, 73, 0.15) 0%, transparent 70%);
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-grey);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(110, 12, 73, 0.2);
+        }
+
+        /* Services Panels */
+        .services-panels {
+            padding: 8rem 5%;
+            background: var(--light-grey);
+        }
+
+        .panel {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel:nth-child(even) {
+            direction: rtl;
+        }
+
+        .panel:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .panel-image {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+        }
+        #mathmakingPanelImage{
+            background-image:  url("./image.png");
+            background-repeat: none;
+            margin : 0.2rem;
+            border-radius: 10px ;
+
+        }
+
+        .panel-content {
+            padding: 3rem;
+        }
+
+        .panel-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .panel-content p {
+            font-size: 1.05rem;
+            color: var(--text-grey);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .explore-btn {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            gap: 1rem;
+            color: var(--soft-gold);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .testimonials-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 4rem;
+            font-weight: 600;
+        }
+
+        .testimonial {
+            background: var(--light-grey);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--dark-grey);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .author-initial {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .author-info p {
+            margin: 0;
+            color: var(--dark-grey);
+            font-weight: 500;
+        }
+
+        .author-info span {
+            color: var(--text-grey);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, var(--primary) 0%, #3d0728 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            padding: 1.2rem 3rem;
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--soft-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .service-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .panel {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-image {
+                height: 300px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+            #mathmakingPanelImage{
+                display: flex;
+                margin : 2rem auto 0 auto;
+                justify-content: center;
+                align-items: center;
+                
+                padding: 0;
+                max-width: 300px
+                
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero {
+                padding: 6rem 5% 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-section,
+            .services-panels,
+            .testimonials,
+            .cta-section {
+                padding: 4rem 5%;
+            }
+
+            .about-text h2,
+            .testimonials h2,
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <div class="logo"><img src="./logo.png" height="40px" alt=""></div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#matchmaking">Matchmaking</a>
+                <a href="#events">Events</a>
+                <a href="#family-office">Family Office</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="cta-btn">Book Consultation</button>
+            <div class="mobile-menu" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#home">Home</a>
+        <a href="#matchmaking">Matchmaking</a>
+        <a href="#events">Events</a>
+        <a href="#family-office">Family Office</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <button class="cta-btn">Book Consultation</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Where Relationships, Celebrations, and Legacies Come Together</h1>
+            <p>Wedsin unites Matchmaking, Events, and Family Office services into one trusted, modern platform designed to elevate every stage of life.</p>
+            
+            <div class="service-cards">
+                <div class="service-card">
+                    
+                    
+                    <div class="service-icon"><img src="./wedding-ring(2).png" style = "height: 50px;" alt=""></div>
+                    <h3>Matchmaking</h3>
+                    <p>Personalized connections, curated events, and holistic relationship support.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Events</h3>
+                    <p>Weddings, festivals, private events, design, and complete event production.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Family Office</h3>
+                    <p>Wealth, governance, education, and long-term legacy planning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-image"></div>
+            <div class="about-text">
+                <h2>Our Mission</h2>
+                <p>Wedsin's mission is to revive trust in love, connection, and family—through thoughtfully designed services for individuals, couples, and families. We operate across three core verticals, unified by a commitment to quality, confidentiality, and meaningful human experiences.</p>
+                <a href="#" class="btn-secondary">Learn More About Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Panels -->
+    <section class="services-panels">
+        <div class="panel">
+            <!-- style="background: linear-gradient(135deg, rgba(110, 12, 73, 0.7), rgba(110, 12, 73, 0.5)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect fill=%22%23f0e6ed%22 width=%22800%22 height=%22600%22/></svg>'); " -->
+            <div class="panel-image" id = "mathmakingPanelImage"></div>
+            <div class="panel-content">
+                <h3>Matchmaking</h3>
+                <p>Curated matches, verified members, and holistic relationship guidance. Our personalized approach ensures meaningful connections built on shared values and life goals.</p>
+                <a href="#" class="explore-btn">Explore →</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-image" style="background: linear-gradient(135deg, rgba(110, 12, 73, 0.7), rgba(110, 12, 73, 0.5)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect fill=%22%23f5f0f3%22 width=%22800%22 height=%22600%22/></svg>');"></div>
+            <div class="panel-content">
+                <h3>Events</h3>
+                <p>World-class event design and execution for weddings, festivals, and corporate gatherings. From intimate celebrations to grand affairs, we bring your vision to life.</p>
+                <a href="#" class="explore-btn">Explore →</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-image" style="background: linear-gradient(135deg, rgba(110, 12, 73, 0.7), rgba(110, 12, 73, 0.5)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect fill=%22%23ede8ec%22 width=%22800%22 height=%22600%22/></svg>');"></div>
+            <div class="panel-content">
+                <h3>Family Office</h3>
+                <p>Investment guidance, governance, estate planning, and strategic advisory. Preserve and grow your family's wealth across generations with expert counsel.</p>
+                <a href="#" class="explore-btn">Explore →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <h2>What Our Clients Say</h2>
+            
+            <div class="testimonial">
+                <p class="testimonial-text">"Wedsin transformed our wedding into an unforgettable experience. Their attention to detail and understanding of our vision was remarkable."</p>
+                <div class="testimonial-author">
+                    <div class="author-initial">A</div>
+                    <div class="author-info">
+                        <p>Asha & Rohan</p>
+                        <span>Mumbai</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"The matchmaking service exceeded our expectations. They understood what we were looking for and introduced us to someone truly compatible."</p>
+                <div class="testimonial-author">
+                    <div class="author-initial">P</div>
+                    <div class="author-info">
+                        <p>Priya K.</p>
+                        <span>Delhi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Let's Build Something Meaningful Together</h2>
+        <button class="btn-primary">Book a Consultation</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Wedsin</h3>
+                <p>Elevating relationships, celebrations, and legacies through trusted, premium services.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Matchmaking</h4>
+                <ul>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Membership</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Events</h4>
+                <ul>
+                    <li><a href="#">Weddings</a></li>
+                    <li><a href="#">Corporate Events</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Family Office</h4>
+                <ul>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Advisory</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#">hello@wedsin.com</a></li>
+                    <li><a href="#">+91 XXX XXX XXXX</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Wedsin. All rights reserved. Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 70) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .panel, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
